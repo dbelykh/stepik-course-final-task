@@ -28,10 +28,19 @@ class ProductPage(BasePage):
         success_message = self.browser.find_element(*ProductPageLocators.SUCCESS_MESSAGE)
         print(success_message.text)
         print(product_name)
-        assert product_name == success_message.text, "The product name is not presented in add to basked succeed message"
+        assert product_name == success_message.text, "The product name is not presented in add to basked succeed " \
+                                                     "message "
 
     def should_be_product_price_in_basket_value_message(self):
         basket_value_message_text = self.browser.find_element(*ProductPageLocators.BASKET_VALUE_MESSAGE).text
         product_price_text = self.browser.find_element(*ProductPageLocators.PRODUCT_PRICE).text
         index = basket_value_message_text.find(product_price_text)
         assert index != -1, "The product price is not equal to the price in basket value message"
+
+    def should_not_be_success_message(self):
+        assert self.is_not_element_present(*ProductPageLocators.SUCCESS_MESSAGE), \
+            "Success message is presented, but should not be"
+
+    def should_success_message_be_disappeared(self):
+        assert self.is_disappeared(*ProductPageLocators.SUCCESS_MESSAGE), \
+            "Success message is presented, but should be disappeared"
